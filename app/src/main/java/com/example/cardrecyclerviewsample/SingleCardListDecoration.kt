@@ -16,13 +16,15 @@ class SingleCardListDecoration(
     override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         (0 until parent.childCount).map {
             val itemView = parent.getChildAt(it)
-            if (parent.childCount == 1) {
+            val position = parent.getChildAdapterPosition(itemView)
+            val count = parent.adapter?.itemCount ?: 0
+            if (count == 1) {
                 itemView.background = ContextCompat.getDrawable(context, R.drawable.common_list_item_bg)
                 itemView.outlineProvider = ViewOutlineProvider.BACKGROUND
-            } else if (!bottomOnly && it == 0) {
+            } else if (!bottomOnly && position == 0) {
                 itemView.background = ContextCompat.getDrawable(context, R.drawable.common_list_top_item_bg)
                 itemView.outlineProvider = ViewOutlineProvider.BACKGROUND
-            } else if (it == parent.childCount - 1) {
+            } else if (position == count - 1) {
                 itemView.background = ContextCompat.getDrawable(context, R.drawable.common_list_bottom_item_bg)
                 itemView.outlineProvider = object: ViewOutlineProvider() {
                     override fun getOutline(view: View?, outline: Outline?) {
